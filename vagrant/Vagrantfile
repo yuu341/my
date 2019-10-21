@@ -1,0 +1,51 @@
+hosts = 
+{
+  "py" => {
+    "ip" => "192.168.33.11",
+    "memory" =>  1024*2,
+    "cpus" => 2,
+    "docker" => true,
+  }
+}
+
+
+Vagrant.configure("2") do |config|
+  
+  if Vagrant.has_plugin?("vagrant-cachier")
+    config.cache.scope = :box
+  end
+  
+  hosts.each do |hostname,host|
+
+    config.vm.define hostname do |e|
+      e.vm.box = "centos/7"
+      e.vm.hostname = hostname
+      print host[:ip]
+      e.vm.network "private_network", ip: host["ip"]
+      e.vm.synced_folder "./data", "/vagrant_data"
+
+      e.vm.provider "virtualbox" do |vb|
+        vb.memory = host["memory"]
+        vb.cpus = host["cpus"]
+        vb.gui = host["gui"] || false
+      end
+
+      if host["gui"] then
+        e.vm.provision "shell", inline: <<-SHELL
+          sudo yum -y groupinstall "GNOME Desktop"
+          sudo yum -y epel-release
+          sudo systemctl set-default graphical.target
+          systemctl get-default
+          sudo shutdown -r now
+        SHELL
+      end
+
+      if host["docker"] then
+        e.vm.provision "docker"
+        e.vm.provision "docker_compose"
+      end
+    end
+
+  end
+
+end
