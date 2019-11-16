@@ -1,0 +1,15 @@
+bindhost: "{{private_ip}}"
+management_bindhost: "{{private_ip}}"
+is_aws: true
+
+download_url:
+  #https://www.keycloak.org/downloads.html
+  keycloak: https://downloads.jboss.org/keycloak/4.8.3.Final/keycloak-4.8.3.Final.tar.gz
+  #http://infinispan.org/download/
+  #infinispan: http://downloads.jboss.org/infinispan/9.4.6.Final/infinispan-9.4.6.Final.zip
+  #infinispan: http://downloads.jboss.org/infinispan/9.4.6.Final/infinispan-9.4.6.Final-all.zip
+  infinispan: http://downloads.jboss.org/infinispan/9.4.6.Final/infinispan-server-9.4.6.Final.zip
+
+home:
+  keycloak: /usr/share/keycloak-4.8.3.Final
+  infinispan: /usr/share/infinispan-server-9.4.6.Final

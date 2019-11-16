@@ -1,0 +1,2 @@
+DOCKER_REPO=_username_/httpd
+DOCKER_TAG=ver1.2

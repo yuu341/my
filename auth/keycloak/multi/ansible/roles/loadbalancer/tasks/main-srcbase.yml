@@ -1,0 +1,79 @@
+- name: useradd and groupadd
+  user:
+    name: nginx
+    group: nginx
+
+- name: move repos file
+  template:
+    src: nginx.repo
+    dest: /etc/yum.repos.d/nginx.repo
+    owner: root
+    group: root
+    mode: 0660
+  notify: restart
+
+- name: install utils
+  yum:
+    name: yum-utils
+    state: latest
+  with_items:
+    - yum-utils
+    - git
+    - unzip
+    - gtar
+    - gcc
+    - pcre
+    - pcre-devel
+    - zlib
+    - zlib-devel
+    - openssl
+    - openssl-devel
+  tags: yum
+
+    #- SFP Single Point of Failure
+  notify: restart
+
+- name: install epel and nginx
+  yum: state=latest name=nginx
+
+- name: import nginx.conf
+  template:
+    src: nginx.conf
+    dest: /etc/nginx/nginx.conf
+    mode: 0644
+    owner: root
+    group: root
+  notify: restart
+
+
+- name: sticky module from 3rd party
+  block:
+    - name: copy sticky-module
+      copy:
+        src: master
+        dest: /root/master
+
+    - name: configure
+      shell: /root/master/configure --add-module=/etc/nginx/modules/nginx-sticky-module-ng
+    - name: make install
+      make:
+        chdir: /root/master
+        target: install
+    
+
+- name: import conf.d
+  template:
+    src: "{{item}}"
+    dest: /etc/nginx/conf.d
+    mode: 0644
+    owner: root
+    group: root
+  with_fileglob:
+    - ../templates/conf.d/*
+  notify: restart
+
+- name: enable and start nginx
+  systemd:
+    name: nginx
+    state: started
+    enabled: yes

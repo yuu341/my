@@ -1,0 +1,10 @@
+- name: restart
+  systemd:
+    name: infinispan
+    state: restarted
+
+- name: daemon-reload
+  systemd:
+    name: infinispan
+    state: restarted
+    daemon_reload: yes

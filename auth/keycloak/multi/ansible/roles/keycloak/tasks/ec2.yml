@@ -1,0 +1,66 @@
+- name: add user
+  user:
+    name: keycloak
+
+- name: download and unarchive tar
+  unarchive:
+    src: "{{download_url.keycloak}}"
+    dest: /usr/share
+    remote_src: yes
+  notify: restart
+
+- name: set role
+  file:
+    path: "{{home.keycloak}}"
+    state: directory
+    recurse: yes
+    owner: keycloak
+    group: keycloak
+
+- name: add service
+  template:
+    src: keycloak.service
+    dest: /usr/lib/systemd/system/keycloak.service
+    owner: root
+    group: root
+    mode: 0770
+  notify: daemon-reload
+  tags: deploy
+
+- name: keycloak log file
+  file:
+    path: /var/log/keycloak
+    state: directory
+    owner: root
+    group: root
+    mode: 0755
+  notify: restart
+
+- name: copy template file
+  template:
+    src: "standalone-ha.xml"
+    dest: "{{home.keycloak}}/standalone/configuration/standalone-ha.xml"
+  notify: restart
+  tags: deploy
+
+- name: copy jgroups module.xml
+  template:
+    src: jgroups/module.xml
+    dest: "{{home.keycloak}}/modules/system/layers/base/org/jgroups/main/module.xml"
+
+- name: copy mysql file
+  copy:
+    src: mysql/com/mysql
+    dest: "{{home.keycloak}}/modules/system/layers/keycloak/com/"
+    owner: keycloak
+    group: keycloak
+    mode: 0770
+
+- name: runserver
+  systemd:
+    name: keycloak
+    state: started
+    enabled: yes
+
+- name: create management user
+  shell: "{{home.keycloak}}/bin/add-user-keycloak.sh --user {{keycloak.root.user}} --password {{keycloak.root.pass}}"

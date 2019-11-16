@@ -1,0 +1,46 @@
+- hosts: all
+  become: yes
+  become_method: sudo
+  become_user: root
+  tasks:
+    - name: "version"
+      debug:
+        msg: "{{ ansible_distribution_version }}"
+      tags: debug_info
+    - name: "vars"
+      debug:
+        msg: "{{ hostvars['infinispan-1'].public_ip + ':' + hostvars['infinispan-2'].public_ip }}"
+      tags: debug_info2
+
+- hosts: database
+  become: yes
+  become_method: sudo
+  become_user: root
+  roles:
+    - {role: utils, tags: utils}
+    - {role: mysql, tags: mysql}
+
+- hosts: keycloak
+  become: yes
+  become_method: sudo
+  become_user: root
+  roles:
+    - {role: jdk, tags: jdk}
+    - {role: utils, tags: utils}
+    - {role: keycloak, tags: keycloak}
+
+- hosts: loadbalancer
+  become: yes
+  become_method: sudo
+  become_user: root
+  roles:
+    - { role: loadbalancer, tags: loadbalancer}
+
+- hosts: infinispan
+  become: yes
+  become_method: sudo
+  become_user: root
+  roles:
+    - {role: jdk, tags: jdk}
+    - {role: utils, tags: utils}
+    - {role: infinispan, tags: infinispan}

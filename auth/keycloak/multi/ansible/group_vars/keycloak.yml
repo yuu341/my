@@ -1,0 +1,36 @@
+db_root_pass: passwordPASSWORD@99
+
+db_user: keycloak
+db_pass: passwordPASSWORD@99
+
+driver_name: mysql
+connection_driver: com.mysql.jdbc.Driver
+#driver_connection_url: jdbc:mysql:localhost/keycloak
+db_max_pool_size: 20
+
+keycloak_app_version: 4.8.3.Final
+app_name: "keycloak-{{keycloak_app_version}}"
+site_name: keycloak
+keycloak:
+  root:
+    user: keycloak
+    pass: password
+  mysql:
+    user: keycloak
+    pass: passwordPASSWORD@99
+
+jgroups:
+  dependencies:
+    module:
+      name: com.mysql
+
+database:
+  root:
+    pass: passwordPASSWORD@99
+  user:
+    name: keycloak
+    pass: passwordPASSWORD@99
+  deriver: mysql
+
+
+#external_ip: "{{private_ip}}"

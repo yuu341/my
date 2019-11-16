@@ -1,0 +1,14 @@
+ansible_host: 52.194.245.252
+ansible_ssh_key_file: /Users/yuu/work/keycloaks/ssh/keycloak-oregon.pem
+ansible_ssh_port: 22
+ansible_ssh_private_key_file: /Users/yuu/.ssh/aws/ap-northeast-1/keycloak.pem
+ansible_ssh_user: ec2-user
+cache_host: "{{hostvars['infinispan-2'].private_ip}}"
+datasource_url: "{{hostvars['mysql-2'].private_ip}}"
+multicast_addr: 234.56.78.1
+private_ip: 172.31.20.116
+public_ip: 52.194.245.252
+site_name: site2
+
+
+external_ip: "{{hostvars['keycloak-1'].private_ip}}"

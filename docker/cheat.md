@@ -26,6 +26,8 @@ $(pwd)でホスト川の今現在のディレクトリを表す。
 
 # docker ps (-a)
 # docker images
+# docker logs
+実行結果が思うようにならなかったときやエラーを吐いた時、どういう操作をしたのかが見れる
 
 # docker rm
 # docker rmi

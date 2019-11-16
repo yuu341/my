@@ -1,0 +1,9 @@
+- name: rpm --import https://artifacts.elastic.co/GPG-KEY-elasticsearch
+  rpm_key:
+    state: present
+    key: https://artifacts.elastic.co/GPG-KEY-elasticsearch
+
+- name: move elastic.repo
+  template:
+    src: elastic.repo
+    dest: /etc/yum.repos.d/elastic.repo

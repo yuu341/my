@@ -1,0 +1,8 @@
+mysql:
+  - MySQL-python
+  - mysql-community-server
+  - mysql-community-client
+  - mysql-community-common
+  - mysql-community-libs
+  - mysql-community-libs-compat
+

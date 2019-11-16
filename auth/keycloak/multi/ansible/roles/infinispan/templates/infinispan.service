@@ -1,0 +1,15 @@
+[Unit]
+Description=Infinispan server daemon
+
+[Service]
+User=infinispan
+ExecStart={{home.infinispan}}/bin/standalone.sh -c clustered.xml \
+  -Djava.net.preferIPv2Stack=true \
+  -Djboss.default.multicast.address={{multicast_addr}} \
+  -Djboss.node.name={{inventory_hostname}} \
+  -b {{bindhost}} \
+  -bmanagement {{management_bindhost}}
+ExecStop=/bin/kill -INT $MAINPID
+
+[Install]
+WatendBy=multi-user.target

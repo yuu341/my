@@ -1,0 +1,60 @@
+- name: turn off selinux
+  selinux:
+    state: disabled
+  when: is_aws == false
+
+- name: move repos file
+  template:
+    src: nginx.repo
+    dest: /etc/yum.repos.d/nginx.repo
+    owner: root
+    group: root
+    mode: 0660
+  notify: restart
+  when: is_aws == false
+
+- name: install utils
+  yum:
+    name: "{{item}}"
+    state: latest
+  with_items:
+    - yum-utils
+  tags: yum
+  when: is_aws == false
+
+    #- SFP Single Point of Failure
+  notify: restart
+
+- name: install epel and nginx
+  yum: state=latest name=nginx
+  when: is_aws == false
+
+- name: install ec2 nginx
+  shell: amazon-linux-extras install -y nginx1.12
+  when: is_aws
+
+- name: import nginx.conf
+  template:
+    src: nginx.conf
+    dest: /etc/nginx/nginx.conf
+    mode: 0644
+    owner: root
+    group: root
+  notify: restart
+
+- name: import conf.d
+  template:
+    src: "{{item}}"
+    dest: /etc/nginx/conf.d
+    mode: 0644
+    owner: root
+    group: root
+  with_fileglob:
+    - ../templates/conf.d/*
+  notify: restart
+
+- name: enable and start nginx
+  systemd:
+    name: nginx
+    state: started
+    enabled: yes

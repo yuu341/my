@@ -1,0 +1,3 @@
+initial_hosts: "{{hostvars['infinispan-1'].private_ip}}[7600],{{hostvars['infinispan-2'].private_ip}}[7600]"
+bindhost: "{{private_ip}}"
+management_bindhost: "{{bindhost}}"

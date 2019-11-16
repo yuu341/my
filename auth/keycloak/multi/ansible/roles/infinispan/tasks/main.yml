@@ -1,0 +1,76 @@
+- name: add user
+  user:
+    name: infinispan
+
+- name: install epel
+  yum:
+    name: epel-release
+    state: latest
+  when: is_aws == false
+
+- name: install epel
+  shell: amazon-linux-extras install -y epel
+  when: is_aws
+
+- name: install maven
+  yum:
+    name: [ maven, unzip ]
+    state: latest
+
+- name: download and unarchive tar
+  unarchive:
+    src: "{{download_url.infinispan}}"
+    dest: /usr/share
+    remote_src: yes
+  notify: restart
+
+- name: set role
+  file:
+    path: "{{home.infinispan}}"
+    state: directory
+    owner: infinispan
+    group: infinispan
+    mode: 0770
+    recurse: yes
+
+- name: copy pom.xml
+  template:
+    src: pom.xml
+    dest: "{{home.infinispan}}"
+    owner: infinispan
+    group: infinispan
+
+- name: copy site.yml
+  template:
+    src: clustered.xml
+    dest: "{{home.infinispan}}/standalone/configuration/clustered.xml"
+    owner: infinispan
+    group: infinispan
+    mode: 0770
+  notify: restart
+
+- name: copy service file
+  template:
+    src: infinispan.service
+    dest: /usr/lib/systemd/system/infinispan.service
+    owner: root
+    group: root
+    mode: 0770
+  notify: daemon-reload
+
+- name: infinispan log file
+  file:
+    path: /var/log/infinispan
+    state: directory
+    owner: root
+    group: root
+    mode: 0755
+
+- name: enable
+  systemd:
+    name: infinispan
+    enabled: yes
+    state: started
+
+- name: create management user
+  shell: "{{home.infinispan}}/bin/add-user.sh --user {{infinispan.root.user}} --password {{infinispan.root.pass}}"

@@ -1,0 +1,10 @@
+ansible_host: 13.231.211.252
+ansible_ssh_key_file: /Users/yuu/work/keycloaks/ssh/keycloak-oregon.pem
+ansible_ssh_port: 22
+ansible_ssh_private_key_file: /Users/yuu/.ssh/aws/ap-northeast-1/keycloak.pem
+ansible_ssh_user: ec2-user
+multicast_addr: 234.56.78.100
+private_ip: 172.31.26.114
+public_ip: 13.231.211.252
+sitename: site2
+sync_sitename: site1

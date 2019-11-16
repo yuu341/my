@@ -1,0 +1,7 @@
+ansible_host: 54.238.178.157
+ansible_ssh_key_file: /Users/yuu/work/keycloaks/ssh/keycloak.pem
+ansible_ssh_port: 22
+ansible_ssh_private_key_file: /Users/yuu/.ssh/aws/ap-northeast-1/keycloak.pem
+ansible_ssh_user: ec2-user
+private_ip: 172.31.25.134
+public_ip: 54.238.178.157

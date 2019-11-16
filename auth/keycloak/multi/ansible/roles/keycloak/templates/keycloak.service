@@ -1,0 +1,11 @@
+[Unit]
+Description=Keycloak server daemon
+
+[Service]
+User=keycloak
+ExecStart={{home.keycloak}}/bin/standalone.sh -c standalone-ha.xml \
+  -P={{home.keycloak}}standalone-ha.properties
+ExecStop=/bin/kill -INT $MAINPID
+
+[Install]
+WatendBy=multi-user.target

@@ -1,0 +1,6 @@
+- name: debug message
+  debug:
+    msg: "{{ansible_os_family}}"
+
+- name: Include OS-specific
+  include_tasks: "{{ansible_os_family}}.yml"

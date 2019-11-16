@@ -1,0 +1,5 @@
+<dependency>
+  <groupId>org.infinispan</groupId>
+  <artifactId>{{pom_artifact_id}}</artifactId>
+  <version>{{pom_version}}</version>
+</dependency>

@@ -1,0 +1,71 @@
+
+- name: rpm install yum.repos
+  yum:
+    name: https://dev.mysql.com/get/mysql80-community-release-el7-2.noarch.rpm
+    state: latest
+
+- name: yum install epel-release
+  yum:
+    name: epel-release
+    state: latest
+
+- name: install mysqld
+  yum:
+    name: "{{mysql}}"
+    state: latest
+    enablerepo: mysql80-community
+  notify: restart
+
+- name: mysql start
+  systemd:
+    name: mysqld
+    state: started
+    enabled: yes
+
+
+- name: exists check for schema
+  shell: mysql -u root -p"{{db_root_pass}}" -e "select count(*) from information_schema.schemata where schema_name= 'keycloak';" -B | tail -n 1
+  register: exists
+  tags: verbose
+
+- name: debug output1
+  debug: msg={{exists}}
+  tags: verbose
+
+- name: create database and change root password
+  block:
+    - name: get initial root password
+      shell: cat /var/log/mysqld.log | grep "temporary password" | awk '{print $13}'
+      register: mysql_root_password
+
+    - name: debug
+      debug: msg="initial password is {{mysql_root_password.stdout_lines[0]}}"
+
+    - name: change root password
+      shell: 'mysqladmin -p"{{mysql_root_password.stdout_lines[0]}}" password "{{db_root_pass}}"'
+
+    - name: secure default
+      shell: 'mysql_secure_installation -p"{{db_root_pass}}" -D'
+
+    - name: copy template
+      template:
+        src: register.sql
+        dest: /tmp/register.sql
+        owner: root
+        group: root
+        mode: 0777
+
+    - name: copy root.cnf
+      template:
+        src: root.cnf
+        dest: root.cnf
+
+    - name: create keycloak db and user
+      shell: 'mysql --defaults-extra-file=root.cnf < /tmp/register.sql'
+
+    - name: remove setting files
+      file:
+        path: ['/root/root.cnf', '/tmp/register.sh']
+        state: absent
+        
+  when: exists.stdout != '1'
