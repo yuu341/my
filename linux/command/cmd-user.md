@@ -1,0 +1,25 @@
+# ユーザ管理
+
+## useradd
+## userdel
+## deluser
+## usermod
+## groupadd
+## groupdel
+## groupmod
+## chsh
+## chfn
+## passwd
+## chage
+## gpasswd
+## groups
+## pwck
+## grpck
+## users
+## id
+## whoami
+## chpasswd
+## vipw/vigr
+## pwconv/pwunconv/grpconv/grpunconv
+## htpasswd
+## htdigest

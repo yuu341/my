@@ -1,0 +1,9 @@
+#　パッケージ管理
+## rpm
+## rpm2cpio
+## yum
+## dpkg
+## apt^cache
+## aptitude
+## apt-get
+## alien

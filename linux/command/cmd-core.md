@@ -1,0 +1,11 @@
+# カーネル
+## lsmod
+## insmod
+## rmmod
+## modprobe
+## depmod
+## modinfo
+## mkinitramfs
+## dracut
+## grub/grub-install
+## dmesg

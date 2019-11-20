@@ -2,18 +2,7 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="d941326f-94d9-4cd5-b32b-7f43ec827a60" name="Default Changelist" comment="">
-      <change afterPath="$PROJECT_DIR$/readme.md" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/spring-webflux.iml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/spring-webflux.ipr" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/spring-webflux.main.iml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/spring-webflux.test.iml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/java/hello/Application.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/java/hello/GreetingHandler.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/java/hello/GreetingRouter.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/java/hello/GreetingWebClient.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/test/java/hello/GreetingRouterTest.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../../../docker/cheat.md" beforeDir="false" afterPath="$PROJECT_DIR$/../../../docker/cheat.md" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/wrapper/gradle-wrapper.properties" beforeDir="false" afterPath="$PROJECT_DIR$/wrapper/gradle-wrapper.properties" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/spring-webflux.iws" beforeDir="false" afterPath="$PROJECT_DIR$/spring-webflux.iws" afterDir="false" />
     </list>
     <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
     <option name="SHOW_DIALOG" value="false" />
@@ -304,7 +293,7 @@
       <option name="number" value="Default" />
       <option name="presentableId" value="Default" />
       <updated>1573892339991</updated>
-      <workItem from="1573892339177" duration="2148000" />
+      <workItem from="1573892339177" duration="2509000" />
     </task>
     <servers />
   </component>
